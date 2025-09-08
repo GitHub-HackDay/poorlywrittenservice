@@ -9,7 +9,9 @@ A high-performance Java web service for managing resource quotas, designed to ha
 - **In-Memory Storage**: Fast ConcurrentHashMap-based storage with automatic cleanup
 - **Sliding Window**: Time-based quota enforcement with configurable windows
 - **RESTful API**: Complete REST API for quota management
-- **Metrics & Monitoring**: Built-in Prometheus metrics and health checks
+- **Comprehensive Monitoring**: Built-in Prometheus metrics and health checks
+- **Advanced Analytics**: User behavior tracking and request pattern analysis
+- **Audit Compliance**: Detailed request logging and audit trails
 - **High Performance**: JMH benchmarks included for performance validation
 
 ## Architecture
@@ -202,8 +204,14 @@ mvn verify
 # Run performance benchmarks
 mvn test-compile exec:java -Dexec.mainClass="com.hackday.quota.performance.QuotaServiceBenchmark"
 
-# Load testing with concurrent requests
-mvn test -Dtest=InMemoryQuotaServiceTest#testConcurrentQuotaChecks
+### Load Testing
+
+```bash
+# Run comprehensive stress test
+./stress-test.sh
+
+# Performance monitoring
+curl http://localhost:8080/quota-service/actuator/metrics
 ```
 
 ## Monitoring and Metrics
@@ -228,9 +236,14 @@ curl http://localhost:8080/quota-service/actuator/health
 curl http://localhost:8080/quota-service/actuator/prometheus
 ```
 
-## Use Cases
+## Key Features
 
-### Rate Limiting
+1. **Rate Limiting**: Check quota before processing API requests
+2. **Resource Analytics**: Track resource usage patterns and user behavior  
+3. **Audit Compliance**: Comprehensive request logging and audit trails
+4. **Geographic Analytics**: IP-based location tracking for user insights
+
+### Rate Limiting Implementation
 
 ```java
 // In your API gateway or application

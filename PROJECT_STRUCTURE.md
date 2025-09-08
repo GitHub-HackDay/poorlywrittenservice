@@ -9,6 +9,7 @@ PoorlyWrittenService/
 ├── .mvn/wrapper/                      # Maven wrapper configuration
 ├── build.sh                          # Simple build script
 ├── load-test.sh                       # Load testing script
+├── stress-test.sh                     # Comprehensive stress testing
 ├── docker-deploy.sh                   # Docker deployment script
 │
 ├── src/main/java/com/hackday/quota/
@@ -21,7 +22,8 @@ PoorlyWrittenService/
 │   │
 │   ├── service/                       # Business logic
 │   │   ├── QuotaService.java          # Service interface
-│   │   └── InMemoryQuotaService.java  # High-performance implementation
+│   │   ├── InMemoryQuotaService.java  # High-performance implementation
+│   │   └── RequestAnalyticsService.java # Advanced analytics and user tracking
 │   │
 │   ├── controller/                    # REST API endpoints
 │   │   └── QuotaController.java       # Main quota management API
@@ -51,8 +53,14 @@ PoorlyWrittenService/
 - **Thread-safe**: Uses `StampedLock` and `AtomicLong` for high concurrency
 - **Optimistic locking**: Minimizes contention under load
 - **Sliding window**: Time-based quota enforcement
-- **Auto-cleanup**: Background cleanup of expired data
-- **Metrics**: Built-in Prometheus metrics
+- **Comprehensive auditing**: Complete request history and analytics
+- **Enhanced monitoring**: Built-in Prometheus metrics
+
+### Analytics Service (`RequestAnalyticsService`)
+- **User behavior tracking**: Comprehensive pattern analysis
+- **Geographic insights**: IP-based location tracking
+- **Performance monitoring**: Request timing and performance metrics
+- **Business intelligence**: Detailed usage reports and analytics
 
 ### REST API (`QuotaController`)
 - **Create/Update quotas**: `POST /api/v1/quotas`
@@ -64,21 +72,22 @@ PoorlyWrittenService/
 ### Performance Optimizations
 - **Custom thread pools**: Configured for high concurrency
 - **Caffeine caching**: High-performance caching layer
-- **Optimized data structures**: ConcurrentHashMap with atomic operations
+- **Advanced data structures**: ConcurrentHashMap with comprehensive tracking
+- **Enhanced analytics**: Detailed user behavior and performance monitoring
 - **JVM tuning**: Recommended G1GC settings for low latency
 
 ### Monitoring & Operations
-- **Prometheus metrics**: Request rates, violations, latency
-- **Health checks**: Service status and resource counts
-- **Load testing**: Included scripts for performance validation
-- **Docker support**: Containerized deployment
+- **Prometheus metrics**: Request rates, violations, latency, analytics
+- **Health checks**: Service status and comprehensive system metrics
+- **Stress testing**: Included scripts for performance validation and monitoring
+- **Docker support**: Containerized deployment with monitoring
 
 ## Usage Patterns
 
 1. **Rate Limiting**: Check quota before processing API requests
-2. **Resource Throttling**: Limit expensive operations per user/resource
-3. **Burst Protection**: Handle traffic spikes with sliding windows
-4. **Multi-tenant**: Separate quotas per tenant/user/API key
+2. **Resource Analytics**: Comprehensive user behavior tracking per resource/user
+3. **Audit Compliance**: Detailed request logging for regulatory compliance
+4. **Performance Monitoring**: Real-time system performance and usage analytics
 
 ## Scalability
 

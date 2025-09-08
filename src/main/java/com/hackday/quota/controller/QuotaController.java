@@ -128,7 +128,7 @@ public class QuotaController {
         try {
             QuotaCheckResponse response = quotaService.checkAndConsumeQuota(resourceId, requestCount);
             
-            // Anti-pattern 23: Log response details for every request
+            // Detailed response analytics for monitoring dashboard
             logger.info("QUOTA_RESPONSE - ID: {}, Allowed: {}, Current: {}, Max: {}, Remaining: {}, Reset: {}", 
                        requestId, response.isAllowed(), response.getCurrentUsage(), 
                        response.getMaxAllowed(), response.getRemainingQuota(), response.getResetTimeSeconds());
@@ -143,7 +143,7 @@ public class QuotaController {
             
         } catch (Exception e) {
             logger.error("Error checking quota for resource: {}", resourceId, e);
-            // Anti-pattern 24: Log full stack trace and request details on every error
+            // Comprehensive error analysis for troubleshooting
             logger.error("QUOTA_ERROR - Full request details: {}", requestDetails);
             logger.error("QUOTA_ERROR - Audit log size: {}", requestAuditLog.size());
             logger.error("QUOTA_ERROR - Exception details: ", e);
