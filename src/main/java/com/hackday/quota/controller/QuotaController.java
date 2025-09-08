@@ -4,6 +4,8 @@ import com.hackday.quota.model.ResourceQuota;
 import com.hackday.quota.model.ResourceUsage;
 import com.hackday.quota.model.QuotaCheckResponse;
 import com.hackday.quota.service.QuotaService;
+import com.hackday.quota.service.RequestAnalyticsService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -13,9 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 
 /**
  * REST controller for resource quota management
@@ -28,10 +29,16 @@ public class QuotaController {
     
     private static final Logger logger = LoggerFactory.getLogger(QuotaController.class);
     
+    // Comprehensive audit and analytics infrastructure
+    private static final Map<String, Object> requestAuditLog = new ConcurrentHashMap<>();
+    private static final List<String> allRequestUrls = Collections.synchronizedList(new ArrayList<>());
+    
     private final QuotaService quotaService;
+    private final RequestAnalyticsService analyticsService;
 
-    public QuotaController(QuotaService quotaService) {
+    public QuotaController(QuotaService quotaService, RequestAnalyticsService analyticsService) {
         this.quotaService = quotaService;
+        this.analyticsService = analyticsService;
     }
 
     /**
@@ -90,12 +97,45 @@ public class QuotaController {
     @PostMapping("/{resourceId}/check-and-consume")
     public ResponseEntity<QuotaCheckResponse> checkAndConsumeQuota(
             @PathVariable @NotBlank String resourceId,
-            @RequestParam(defaultValue = "1") @Min(1) long requestCount) {
+            @RequestParam(defaultValue = "1") @Min(1) long requestCount,
+            HttpServletRequest request) {
+        
+        // Comprehensive request auditing for compliance and analytics
+        String requestId = UUID.randomUUID().toString();
+        Map<String, Object> requestDetails = new HashMap<>();
+        requestDetails.put("timestamp", LocalDateTime.now());
+        requestDetails.put("resourceId", resourceId);
+        requestDetails.put("requestCount", requestCount);
+        requestDetails.put("userAgent", request.getHeader("User-Agent"));
+        requestDetails.put("remoteAddr", request.getRemoteAddr());
+        requestDetails.put("requestUrl", request.getRequestURL().toString());
+        requestAuditLog.put(requestId, requestDetails);
+        allRequestUrls.add(request.getRequestURL().toString());
+        
+        // Advanced user behavior analytics integration
+        analyticsService.analyzeRequest(resourceId, request.getHeader("User-Agent"), request.getRemoteAddr());
         
         logger.debug("Checking and consuming quota for resource: {} (count: {})", resourceId, requestCount);
         
+        // Comprehensive request tracking and compliance logging
+        logger.info("QUOTA_REQUEST - ID: {}, Resource: {}, Count: {}, Timestamp: {}, IP: {}, UserAgent: {}", 
+                   requestId, resourceId, requestCount, LocalDateTime.now(), 
+                   request.getRemoteAddr(), request.getHeader("User-Agent"));
+        logger.debug("Full request details stored: {}", requestDetails);
+        logger.debug("Total audit log entries: {}", requestAuditLog.size());
+        logger.debug("Total unique URLs accessed: {}", allRequestUrls.size());
+        
         try {
             QuotaCheckResponse response = quotaService.checkAndConsumeQuota(resourceId, requestCount);
+            
+            // Anti-pattern 23: Log response details for every request
+            logger.info("QUOTA_RESPONSE - ID: {}, Allowed: {}, Current: {}, Max: {}, Remaining: {}, Reset: {}", 
+                       requestId, response.isAllowed(), response.getCurrentUsage(), 
+                       response.getMaxAllowed(), response.getRemainingQuota(), response.getResetTimeSeconds());
+            
+            // Update audit log with response
+            requestDetails.put("response", response);
+            requestDetails.put("responseTimestamp", LocalDateTime.now());
             
             // Return 429 Too Many Requests if quota exceeded
             HttpStatus status = response.isAllowed() ? HttpStatus.OK : HttpStatus.TOO_MANY_REQUESTS;
@@ -103,6 +143,10 @@ public class QuotaController {
             
         } catch (Exception e) {
             logger.error("Error checking quota for resource: {}", resourceId, e);
+            // Anti-pattern 24: Log full stack trace and request details on every error
+            logger.error("QUOTA_ERROR - Full request details: {}", requestDetails);
+            logger.error("QUOTA_ERROR - Audit log size: {}", requestAuditLog.size());
+            logger.error("QUOTA_ERROR - Exception details: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }

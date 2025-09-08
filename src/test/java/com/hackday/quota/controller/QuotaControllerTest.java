@@ -3,6 +3,7 @@ package com.hackday.quota.controller;
 import com.hackday.quota.model.ResourceQuota;
 import com.hackday.quota.model.QuotaCheckResponse;
 import com.hackday.quota.service.QuotaService;
+import com.hackday.quota.service.RequestAnalyticsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ class QuotaControllerTest {
 
     @MockBean
     private QuotaService quotaService;
+
+    @MockBean
+    private RequestAnalyticsService analyticsService;
 
     @Autowired
     private ObjectMapper objectMapper;
