@@ -49,3 +49,163 @@
 2025-09-09 01:14:37.381 [main] DEBUG c.h.quota.controller.QuotaController - Total unique URLs accessed: 2
 2025-09-09 01:14:37.381 [main] INFO  c.h.quota.controller.QuotaController - QUOTA_RESPONSE - ID: db19490f-02a4-4e7b-8397-03149f4f13b6, Allowed: true, Current: 5, Max: 100, Remaining: 95, Reset: 55
 2025-09-09 01:14:37.388 [main] DEBUG c.h.quota.controller.QuotaController - Resetting quota usage for resource: test-resource
+2025-09-09 01:22:37.096 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:22:37.098 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:22:37.099 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:22:37.099 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:22:37.101 [background-preinit] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:22:37.114 [background-preinit] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:22:37.120 [main] INFO  c.h.q.ResourceQuotaServiceApplication - Starting ResourceQuotaServiceApplication using Java 17.0.16 with PID 5356 (/home/runner/work/poorlywrittenservice/poorlywrittenservice/target/classes started by runner in /home/runner/work/poorlywrittenservice/poorlywrittenservice)
+2025-09-09 01:22:37.120 [main] DEBUG c.h.q.ResourceQuotaServiceApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-09 01:22:37.121 [main] INFO  c.h.q.ResourceQuotaServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-09 01:22:37.177 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:22:37.180 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:22:37.180 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:22:37.180 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:22:37.180 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:22:37.181 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:22:38.040 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-09 01:22:38.070 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-09 01:22:38.070 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-09-09 01:22:38.112 [main] INFO  o.a.c.c.C.[.[.[/quota-service] - Initializing Spring embedded WebApplicationContext
+2025-09-09 01:22:38.112 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 951 ms
+2025-09-09 01:22:38.268 [main] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:22:38.269 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2025-09-09 01:22:38.269 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2025-09-09 01:22:38.271 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:22:38.271 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via user class loader
+2025-09-09 01:22:38.271 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:22:38.271 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:22:38.271 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:22:38.272 [main] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:22:38.273 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:22:38.273 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:22:38.274 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:22:38.274 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:22:38.274 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:22:38.274 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:22:38.460 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cacheAutoConfigurationValidator' defined in class path resource [org/springframework/boot/autoconfigure/cache/CacheAutoConfiguration.class]: No cache manager could be auto-configured, check your configuration (caching type is 'CAFFEINE')
+2025-09-09 01:22:38.463 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-09-09 01:22:38.499 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-09-09 01:22:38.509 [main] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'cacheAutoConfigurationValidator' defined in class path resource [org/springframework/boot/autoconfigure/cache/CacheAutoConfiguration.class]: No cache manager could be auto-configured, check your configuration (caching type is 'CAFFEINE')
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1775)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:946)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331)
+	at com.hackday.quota.ResourceQuotaServiceApplication.main(ResourceQuotaServiceApplication.java:14)
+Caused by: java.lang.IllegalArgumentException: No cache manager could be auto-configured, check your configuration (caching type is 'CAFFEINE')
+	at org.springframework.util.Assert.notNull(Assert.java:190)
+	at org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration$CacheManagerValidator.afterPropertiesSet(CacheAutoConfiguration.java:105)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771)
+	... 16 common frames omitted
+2025-09-09 01:23:54.378 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:23:54.380 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:23:54.380 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:23:54.380 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:23:54.382 [background-preinit] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:23:54.396 [background-preinit] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:23:54.402 [main] INFO  c.h.q.ResourceQuotaServiceApplication - Starting ResourceQuotaServiceApplication using Java 17.0.16 with PID 5524 (/home/runner/work/poorlywrittenservice/poorlywrittenservice/target/classes started by runner in /home/runner/work/poorlywrittenservice/poorlywrittenservice)
+2025-09-09 01:23:54.403 [main] DEBUG c.h.q.ResourceQuotaServiceApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-09 01:23:54.404 [main] INFO  c.h.q.ResourceQuotaServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-09 01:23:54.466 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:23:54.470 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:23:54.470 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:23:54.470 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:23:54.470 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:23:54.471 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:23:55.292 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-09 01:23:55.299 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-09 01:23:55.299 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-09-09 01:23:55.331 [main] INFO  o.a.c.c.C.[.[.[/quota-service] - Initializing Spring embedded WebApplicationContext
+2025-09-09 01:23:55.331 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 882 ms
+2025-09-09 01:23:55.497 [main] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:23:55.499 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2025-09-09 01:23:55.499 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2025-09-09 01:23:55.500 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:23:55.500 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via user class loader
+2025-09-09 01:23:55.501 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:23:55.501 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:23:55.501 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:23:55.501 [main] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:23:55.502 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:23:55.503 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:23:55.503 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:23:55.503 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:23:55.504 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:23:55.504 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:23:55.896 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2025-09-09 01:23:56.031 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/quota-service'
+2025-09-09 01:23:56.043 [main] INFO  c.h.q.ResourceQuotaServiceApplication - Started ResourceQuotaServiceApplication in 1.965 seconds (process running for 2.198)
+2025-09-09 01:23:56.049 [scheduling-1] DEBUG c.h.q.service.InMemoryQuotaService - Cleanup cycle completed - no expired trackers found
+2025-09-09 01:23:56.049 [scheduling-1] DEBUG c.h.q.service.InMemoryQuotaService - Current system state - Usage trackers: 0, Quotas: 0
+2025-09-09 01:23:56.050 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total IPs tracked: 0
+2025-09-09 01:23:56.050 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total unique user agents: 0
+2025-09-09 01:23:56.050 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total requests: 0
+2025-09-09 01:23:56.050 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Cache entries: 0
+2025-09-09 01:24:29.058 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:24:29.060 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:24:29.061 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:24:29.061 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:24:29.063 [background-preinit] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:24:29.080 [main] INFO  c.h.q.ResourceQuotaServiceApplication - Starting ResourceQuotaServiceApplication using Java 17.0.16 with PID 5685 (/home/runner/work/poorlywrittenservice/poorlywrittenservice/target/classes started by runner in /home/runner/work/poorlywrittenservice/poorlywrittenservice)
+2025-09-09 01:24:29.080 [background-preinit] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:24:29.080 [main] DEBUG c.h.q.ResourceQuotaServiceApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-09 01:24:29.081 [main] INFO  c.h.q.ResourceQuotaServiceApplication - No active profile set, falling back to 1 default profile: "default"
+2025-09-09 01:24:29.143 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:24:29.147 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:24:29.147 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:24:29.147 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:24:29.147 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:24:29.148 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:24:29.952 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-09-09 01:24:29.958 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-09-09 01:24:29.958 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2025-09-09 01:24:29.990 [main] INFO  o.a.c.c.C.[.[.[/quota-service] - Initializing Spring embedded WebApplicationContext
+2025-09-09 01:24:29.990 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 868 ms
+2025-09-09 01:24:30.175 [main] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:24:30.177 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2025-09-09 01:24:30.177 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2025-09-09 01:24:30.179 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:24:30.179 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via user class loader
+2025-09-09 01:24:30.179 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:24:30.180 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:24:30.180 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:24:30.180 [main] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:24:30.181 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:24:30.182 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:24:30.182 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:24:30.182 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:24:30.182 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:24:30.183 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:24:30.510 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 15 endpoint(s) beneath base path '/actuator'
+2025-09-09 01:24:30.573 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/quota-service'
+2025-09-09 01:24:30.585 [main] INFO  c.h.q.ResourceQuotaServiceApplication - Started ResourceQuotaServiceApplication in 1.821 seconds (process running for 2.048)
+2025-09-09 01:24:30.590 [scheduling-1] DEBUG c.h.q.service.InMemoryQuotaService - Cleanup cycle completed - no expired trackers found
+2025-09-09 01:24:30.590 [scheduling-1] DEBUG c.h.q.service.InMemoryQuotaService - Current system state - Usage trackers: 0, Quotas: 0
+2025-09-09 01:24:30.591 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total IPs tracked: 0
+2025-09-09 01:24:30.591 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total unique user agents: 0
+2025-09-09 01:24:30.591 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total requests: 0
+2025-09-09 01:24:30.591 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Cache entries: 0
+2025-09-09 01:24:40.139 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[.[/quota-service] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-09 01:24:40.139 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-09-09 01:24:40.140 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-09-09 01:25:00.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total IPs tracked: 0
+2025-09-09 01:25:00.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total unique user agents: 0
+2025-09-09 01:25:00.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total requests: 0
+2025-09-09 01:25:00.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Cache entries: 0
