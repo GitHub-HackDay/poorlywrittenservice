@@ -1,0 +1,51 @@
+2025-09-09 01:14:35.396 [main] INFO  c.h.q.controller.QuotaControllerTest - Starting QuotaControllerTest using Java 17.0.16 with PID 4032 (started by runner in /home/runner/work/poorlywrittenservice/poorlywrittenservice)
+2025-09-09 01:14:35.397 [main] DEBUG c.h.q.controller.QuotaControllerTest - Running with Spring Boot v3.2.0, Spring v6.1.1
+2025-09-09 01:14:35.398 [main] INFO  c.h.q.controller.QuotaControllerTest - No active profile set, falling back to 1 default profile: "default"
+2025-09-09 01:14:35.400 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:14:35.401 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:14:35.401 [background-preinit] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:14:35.402 [background-preinit] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:14:35.404 [background-preinit] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:14:35.424 [background-preinit] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:14:35.496 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:14:35.500 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:14:35.500 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:14:35.500 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:14:35.500 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:14:35.500 [background-preinit] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:14:36.515 [main] DEBUG o.h.v.m.ResourceBundleMessageInterpolator - Loaded expression factory via original TCCL
+2025-09-09 01:14:36.518 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom MessageInterpolator of type org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator
+2025-09-09 01:14:36.518 [main] DEBUG o.h.v.i.e.AbstractConfigurationImpl - Setting custom ConstraintValidatorFactory of type org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory
+2025-09-09 01:14:36.520 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - Trying to load META-INF/validation.xml for XML based Validator configuration.
+2025-09-09 01:14:36.521 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via user class loader
+2025-09-09 01:14:36.521 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via TCCL
+2025-09-09 01:14:36.521 [main] DEBUG o.h.v.i.x.c.ResourceLoaderHelper - Trying to load META-INF/validation.xml via Hibernate Validator's class loader
+2025-09-09 01:14:36.522 [main] DEBUG o.h.v.i.x.config.ValidationXmlParser - No META-INF/validation.xml found. Using annotation based configuration only.
+2025-09-09 01:14:36.523 [main] DEBUG o.h.v.i.e.r.TraversableResolvers - Cannot find jakarta.persistence.Persistence on classpath. Assuming non JPA 2 environment. All properties will per default be traversable.
+2025-09-09 01:14:36.526 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000252: Using org.hibernate.validator.internal.engine.DefaultPropertyNodeNameProvider as property node name provider.
+2025-09-09 01:14:36.527 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.springframework.validation.beanvalidation.LocaleContextMessageInterpolator as ValidatorFactory-scoped message interpolator.
+2025-09-09 01:14:36.527 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.resolver.TraverseAllTraversableResolver as ValidatorFactory-scoped traversable resolver.
+2025-09-09 01:14:36.527 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.util.ExecutableParameterNameProvider as ValidatorFactory-scoped parameter name provider.
+2025-09-09 01:14:36.528 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.DefaultClockProvider as ValidatorFactory-scoped clock provider.
+2025-09-09 01:14:36.528 [main] DEBUG o.h.v.i.e.ValidatorFactoryConfigurationHelper - HV000234: Using org.hibernate.validator.internal.engine.scripting.DefaultScriptEvaluatorFactory as ValidatorFactory-scoped script evaluator factory.
+2025-09-09 01:14:37.000 [main] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2025-09-09 01:14:37.000 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2025-09-09 01:14:37.002 [main] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 2 ms
+2025-09-09 01:14:37.033 [main] INFO  c.h.q.controller.QuotaControllerTest - Started QuotaControllerTest in 2.216 seconds (process running for 4.942)
+2025-09-09 01:14:37.171 [main] DEBUG c.h.quota.controller.QuotaController - Checking and consuming quota for resource: test-resource (count: 1)
+2025-09-09 01:14:37.171 [main] INFO  c.h.quota.controller.QuotaController - QUOTA_REQUEST - ID: 86287f32-7d0b-4c0a-a686-f910c6c2a5f5, Resource: test-resource, Count: 1, Timestamp: 2025-09-09T01:14:37.171868685, IP: 127.0.0.1, UserAgent: null
+2025-09-09 01:14:37.172 [main] DEBUG c.h.quota.controller.QuotaController - Full request details stored: {requestCount=1, resourceId=test-resource, requestUrl=http://localhost/api/v1/quotas/test-resource/check-and-consume, userAgent=null, timestamp=2025-09-09T01:14:37.154096076, remoteAddr=127.0.0.1}
+2025-09-09 01:14:37.172 [main] DEBUG c.h.quota.controller.QuotaController - Total audit log entries: 1
+2025-09-09 01:14:37.172 [main] DEBUG c.h.quota.controller.QuotaController - Total unique URLs accessed: 1
+2025-09-09 01:14:37.175 [main] INFO  c.h.quota.controller.QuotaController - QUOTA_RESPONSE - ID: 86287f32-7d0b-4c0a-a686-f910c6c2a5f5, Allowed: false, Current: 100, Max: 100, Remaining: 0, Reset: 30
+2025-09-09 01:14:37.288 [main] DEBUG c.h.quota.controller.QuotaController - Deleting quota for resource: test-resource
+2025-09-09 01:14:37.299 [main] DEBUG c.h.quota.controller.QuotaController - Getting quota for resource: test-resource
+2025-09-09 01:14:37.367 [main] DEBUG c.h.quota.controller.QuotaController - Getting quota for resource: non-existent
+2025-09-09 01:14:37.374 [main] DEBUG c.h.quota.controller.QuotaController - Deleting quota for resource: non-existent
+2025-09-09 01:14:37.380 [main] DEBUG c.h.quota.controller.QuotaController - Checking and consuming quota for resource: test-resource (count: 1)
+2025-09-09 01:14:37.380 [main] INFO  c.h.quota.controller.QuotaController - QUOTA_REQUEST - ID: db19490f-02a4-4e7b-8397-03149f4f13b6, Resource: test-resource, Count: 1, Timestamp: 2025-09-09T01:14:37.380791496, IP: 127.0.0.1, UserAgent: null
+2025-09-09 01:14:37.380 [main] DEBUG c.h.quota.controller.QuotaController - Full request details stored: {requestCount=1, resourceId=test-resource, requestUrl=http://localhost/api/v1/quotas/test-resource/check-and-consume, userAgent=null, timestamp=2025-09-09T01:14:37.380086984, remoteAddr=127.0.0.1}
+2025-09-09 01:14:37.381 [main] DEBUG c.h.quota.controller.QuotaController - Total audit log entries: 2
+2025-09-09 01:14:37.381 [main] DEBUG c.h.quota.controller.QuotaController - Total unique URLs accessed: 2
+2025-09-09 01:14:37.381 [main] INFO  c.h.quota.controller.QuotaController - QUOTA_RESPONSE - ID: db19490f-02a4-4e7b-8397-03149f4f13b6, Allowed: true, Current: 5, Max: 100, Remaining: 95, Reset: 55
+2025-09-09 01:14:37.388 [main] DEBUG c.h.quota.controller.QuotaController - Resetting quota usage for resource: test-resource

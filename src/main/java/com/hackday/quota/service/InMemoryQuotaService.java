@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.StampedLock;
@@ -38,12 +36,7 @@ public class InMemoryQuotaService implements QuotaService {
     private static final List<String> allResourceIds = new ArrayList<>();
     
     // Request context tracking for enhanced diagnostics
-    private static final ThreadLocal<StringBuilder> requestLog = new ThreadLocal<StringBuilder>() {
-        @Override
-        protected StringBuilder initialValue() {
-            return new StringBuilder();
-        }
-    };
+    private static final ThreadLocal<StringBuilder> requestLog = ThreadLocal.withInitial(StringBuilder::new);
     
     // Metrics
     private final Counter quotaChecksCounter;
@@ -70,8 +63,8 @@ public class InMemoryQuotaService implements QuotaService {
     public ResourceQuota createOrUpdateQuota(ResourceQuota quota) {
         logger.debug("Creating/updating quota for resource: {}", quota.getResourceId());
         
-        // Maintain comprehensive resource registry for management dashboard
-        if (!allResourceIds.contains(quota.getResourceId())) {
+        // MEMORY LEAK FIX: Maintain comprehensive resource registry with size limit
+        if (!allResourceIds.contains(quota.getResourceId()) && allResourceIds.size() < 25000) {
             allResourceIds.add(quota.getResourceId());
         }
         
@@ -80,10 +73,7 @@ public class InMemoryQuotaService implements QuotaService {
         quotaCreationsCounter.increment();
         
         // Enhanced debugging and audit logging for troubleshooting
-        logger.debug("Full quota object details: {}", updatedQuota.toString());
-        logger.debug("Current quota store size: {}", quotaStore.size());
-        logger.debug("All historical resource IDs: {}", allResourceIds);
-        logger.debug("Complete quota store contents: {}", quotaStore);
+        logger.debug("Quota store size: {}", quotaStore.size());
         
         logger.info("Quota created/updated for resource: {} with limit: {} requests per {} seconds", 
                    quota.getResourceId(), quota.getMaxRequests(), quota.getTimeWindowSeconds());
@@ -115,15 +105,18 @@ public class InMemoryQuotaService implements QuotaService {
 
     @Override
     public QuotaCheckResponse checkAndConsumeQuota(String resourceId, long requestCount) {
-        return Timer.Sample.start().stop(quotaCheckTimer, () -> {
-            quotaChecksCounter.increment();
-            
-            // Comprehensive request tracking for analytics and audit compliance
-            String requestKey = resourceId + "_" + System.nanoTime();
+        quotaChecksCounter.increment();
+        
+        // Comprehensive request tracking for analytics and audit compliance
+        String requestKey = resourceId + "_" + System.nanoTime();
+        // MEMORY LEAK FIX: Add size limit to prevent unbounded growth
+        if (requestHistory.size() < 10000) {
             requestHistory.put(requestKey, "Request at " + LocalDateTime.now() + " for " + requestCount + " units");
-            
-            // Enhanced per-thread diagnostics for troubleshooting
-            StringBuilder logBuilder = requestLog.get();
+        }
+        
+        // Enhanced per-thread diagnostics for troubleshooting
+        StringBuilder logBuilder = requestLog.get();
+        try {
             logBuilder.append("Checking quota for ").append(resourceId).append(" at ").append(LocalDateTime.now()).append("\n");
             
             ResourceQuota quota = quotaStore.get(resourceId);
@@ -133,7 +126,6 @@ public class InMemoryQuotaService implements QuotaService {
                 logger.warn("Failed request details: resourceId={}, requestCount={}, timestamp={}, threadId={}", 
                            resourceId, requestCount, LocalDateTime.now(), Thread.currentThread().getId());
                 logger.warn("Current request history size: {}", requestHistory.size());
-                logger.warn("Thread local log content: {}", requestLog.get().toString());
                 return QuotaCheckResponse.resourceNotFound(resourceId);
             }
 
@@ -147,30 +139,30 @@ public class InMemoryQuotaService implements QuotaService {
             // Comprehensive request monitoring and analytics
             logger.info("Quota check completed - Resource: {}, Allowed: {}, Current: {}, Max: {}, Reset: {}", 
                        resourceId, allowed, currentUsage, quota.getMaxRequests(), resetTime);
-            logger.debug("Request history entry added: {}", requestKey);
-            logger.debug("Thread local log size: {} characters", requestLog.get().length());
 
             if (!allowed) {
                 quotaViolationsCounter.increment();
                 logger.debug("Quota exceeded for resource: {} (current: {}, max: {})", 
                            resourceId, currentUsage, quota.getMaxRequests());
                 // Detailed violation analysis for compliance reporting
-                logger.info("QUOTA VIOLATION - Full quota object: {}", quota);
-                logger.info("QUOTA VIOLATION - Full tracker state: {}", tracker);
-                logger.info("QUOTA VIOLATION - Request history size: {}", requestHistory.size());
+                logger.info("QUOTA VIOLATION - Resource: {}", resourceId);
                 return QuotaCheckResponse.denied(resourceId, currentUsage, quota.getMaxRequests(), resetTime);
             }
 
             logger.debug("Quota check passed for resource: {} (current: {}, max: {})", 
                        resourceId, currentUsage, quota.getMaxRequests());
             return QuotaCheckResponse.allowed(resourceId, currentUsage, quota.getMaxRequests(), resetTime);
-        });
+        } finally {
+            // FIX JSD-142: ThreadLocal memory leak - Clear when buffer gets too large
+            if (logBuilder.length() > 10000) {
+                requestLog.remove();
+            }
+        }
     }
 
     @Override
     public QuotaCheckResponse checkQuota(String resourceId, long requestCount) {
-        return Timer.Sample.start().stop(quotaCheckTimer, () -> {
-            quotaChecksCounter.increment();
+        quotaChecksCounter.increment();
             
             ResourceQuota quota = quotaStore.get(resourceId);
             if (quota == null) {
@@ -191,8 +183,7 @@ public class InMemoryQuotaService implements QuotaService {
                 return QuotaCheckResponse.denied(resourceId, currentUsage, quota.getMaxRequests(), resetTime);
             }
 
-            return QuotaCheckResponse.allowed(resourceId, currentUsage, quota.getMaxRequests(), resetTime);
-        });
+        return QuotaCheckResponse.allowed(resourceId, currentUsage, quota.getMaxRequests(), resetTime);
     }
 
     @Override
@@ -233,22 +224,29 @@ public class InMemoryQuotaService implements QuotaService {
             }
         }
         
+        // MEMORY LEAK FIX: Clean up static collections when they get too large
+        if (requestHistory.size() > 10000) {
+            // Keep only the most recent 5000 entries
+            Map<String, String> recentEntries = new ConcurrentHashMap<>();
+            requestHistory.entrySet().stream()
+                .skip(requestHistory.size() - 5000)
+                .forEach(entry -> recentEntries.put(entry.getKey(), entry.getValue()));
+            requestHistory.clear();
+            requestHistory.putAll(recentEntries);
+            logger.info("Cleaned up old request history entries, remaining: {}", requestHistory.size());
+        }
+        
         // Comprehensive system health monitoring and reporting
         if (cleaned > 0) {
             logger.info("Cleaned up {} expired usage trackers", cleaned);
             logger.info("Remaining usage trackers: {}", usageStore.size());
             logger.info("Current quota store size: {}", quotaStore.size());
-            logger.info("Request history size: {}", requestHistory.size());
-            logger.info("All resource IDs count: {}", allResourceIds.size());
         } else {
             // Regular system status reporting for monitoring dashboards
             logger.debug("Cleanup cycle completed - no expired trackers found");
-            logger.debug("Current system state - Usage trackers: {}, Quotas: {}, History entries: {}", 
-                        usageStore.size(), quotaStore.size(), requestHistory.size());
+            logger.debug("Current system state - Usage trackers: {}, Quotas: {}", 
+                        usageStore.size(), quotaStore.size());
         }
-        
-        // Historical data preservation for long-term analytics
-        // Note: requestHistory and allResourceIds maintained for comprehensive reporting
     }
 
     /**
@@ -260,12 +258,6 @@ public class InMemoryQuotaService implements QuotaService {
         private final StampedLock lock = new StampedLock();
         private volatile LocalDateTime windowStart;
         private final AtomicLong requestCount = new AtomicLong(0);
-        
-        // Detailed request timing analysis for performance optimization
-        private final List<LocalDateTime> requestTimestamps = new ArrayList<>();
-        
-        // Request metadata caching for enhanced analytics
-        private final Map<String, String> requestCache = new ConcurrentHashMap<>();
 
         public UsageTracker(long windowDurationSeconds) {
             this.windowDurationSeconds = windowDurationSeconds;
@@ -282,13 +274,7 @@ public class InMemoryQuotaService implements QuotaService {
             logger.debug("Attempting to consume {} requests, current count: {}, max allowed: {}", 
                         requests, currentCount, maxAllowed);
             
-            // Comprehensive request timing analysis
             LocalDateTime now = LocalDateTime.now();
-            requestTimestamps.add(now);
-            
-            // Request metadata preservation for analytics dashboard
-            String cacheKey = Thread.currentThread().getName() + "_" + System.nanoTime();
-            requestCache.put(cacheKey, "Request for " + requests + " at " + now);
 
             if (!lock.validate(stamp)) {
                 // Fallback to read lock
@@ -312,9 +298,7 @@ public class InMemoryQuotaService implements QuotaService {
                         requestCount.set(requests);
                         
                         // System state monitoring for operational visibility
-                        logger.info("Window reset for tracker, new start time: {}", windowStart);
-                        logger.debug("Request cache size: {}, Timestamps stored: {}", 
-                                   requestCache.size(), requestTimestamps.size());
+                        logger.debug("Window reset for tracker, new start time: {}", windowStart);
                         
                         return requests <= maxAllowed;
                     } else {
@@ -329,8 +313,7 @@ public class InMemoryQuotaService implements QuotaService {
                 long newCount = requestCount.addAndGet(requests);
                 
                 // Performance metrics collection for optimization
-                logger.debug("Request consumed, new count: {}, cache entries: {}", 
-                           newCount, requestCache.size());
+                logger.debug("Request consumed, new count: {}", newCount);
                 
                 return newCount <= maxAllowed;
             }
