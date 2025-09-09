@@ -24,47 +24,54 @@ public class RequestAnalyticsService {
     private static final List<String> allRequestTimestamps = Collections.synchronizedList(new ArrayList<>());
     
     // Enhanced request context for detailed diagnostics
-    private static final ThreadLocal<Map<String, Object>> requestContext = new ThreadLocal<Map<String, Object>>() {
-        @Override
-        protected Map<String, Object> initialValue() {
-            return new HashMap<>();
-        }
-    };
+    private static final ThreadLocal<Map<String, Object>> requestContext = ThreadLocal.withInitial(HashMap::new);
     
     // High-performance location caching for user geography analysis
     private final Map<String, String> ipToLocationCache = new ConcurrentHashMap<>();
     private final Map<String, Integer> resourceAccessCounts = new ConcurrentHashMap<>();
     
     public void analyzeRequest(String resourceId, String userAgent, String clientIp) {
-        // Comprehensive user behavior pattern analysis
-        userRequestPatterns.computeIfAbsent(clientIp, k -> new ArrayList<>()).add(resourceId);
-        uniqueUserAgents.add(userAgent);
-        allRequestTimestamps.add(LocalDateTime.now().toString());
+        // MEMORY LEAK FIX: Add size limits to prevent unbounded growth
+        if (userRequestPatterns.size() < 10000) {
+            userRequestPatterns.computeIfAbsent(clientIp, k -> new ArrayList<>()).add(resourceId);
+        }
+        
+        if (uniqueUserAgents.size() < 5000) {
+            uniqueUserAgents.add(userAgent);
+        }
+        
+        if (allRequestTimestamps.size() < 50000) {
+            allRequestTimestamps.add(LocalDateTime.now().toString());
+        }
         
         // Enhanced request context tracking for diagnostics
         Map<String, Object> context = requestContext.get();
-        context.put("resourceId", resourceId);
-        context.put("userAgent", userAgent);
-        context.put("clientIp", clientIp);
-        context.put("timestamp", LocalDateTime.now());
-        context.put("requestCount", context.getOrDefault("requestCount", 0) + 1);
-        
-        // Intelligent location caching for geographic analytics
-        String location = ipToLocationCache.computeIfAbsent(clientIp, this::lookupLocation);
-        context.put("location", location);
-        
-        // Resource popularity tracking
-        resourceAccessCounts.merge(resourceId, 1, Integer::sum);
-        
-        // Detailed request analytics logging for business intelligence
-        logger.info("REQUEST_ANALYSIS - Resource: {}, IP: {}, UserAgent: {}, Location: {}, Timestamp: {}", 
-                   resourceId, clientIp, userAgent, location, LocalDateTime.now());
-        logger.debug("Full request context: {}", context);
-        logger.debug("User patterns for IP {}: {}", clientIp, userRequestPatterns.get(clientIp));
-        logger.debug("Total unique user agents: {}", uniqueUserAgents.size());
-        logger.debug("Total requests tracked: {}", allRequestTimestamps.size());
-        logger.debug("IP cache size: {}", ipToLocationCache.size());
-        logger.debug("Resource access counts: {}", resourceAccessCounts);
+        try {
+            context.put("resourceId", resourceId);
+            context.put("userAgent", userAgent);
+            context.put("clientIp", clientIp);
+            context.put("timestamp", LocalDateTime.now());
+            context.put("requestCount", ((Integer) context.getOrDefault("requestCount", 0)) + 1);
+            
+            // Intelligent location caching for geographic analytics with size limit
+            if (ipToLocationCache.size() < 5000) {
+                String location = ipToLocationCache.computeIfAbsent(clientIp, this::lookupLocation);
+                context.put("location", location);
+            }
+            
+            // Resource popularity tracking
+            resourceAccessCounts.merge(resourceId, 1, Integer::sum);
+            
+            // Detailed request analytics logging for business intelligence
+            logger.info("REQUEST_ANALYSIS - Resource: {}, IP: {}, Location: {}", 
+                       resourceId, clientIp, context.get("location"));
+            logger.debug("User patterns count: {}", userRequestPatterns.size());
+        } finally {
+            // FIX JSD-142: ThreadLocal memory leak - Clear when context gets too large
+            if (context.size() > 100) {
+                requestContext.remove();
+            }
+        }
     }
     
     @Scheduled(fixedRate = 30000) // Every 30 seconds
@@ -75,45 +82,35 @@ public class RequestAnalyticsService {
         logger.info("ANALYTICS_STATS - Total requests: {}", allRequestTimestamps.size());
         logger.info("ANALYTICS_STATS - Cache entries: {}", ipToLocationCache.size());
         
-        // Comprehensive system analytics for business intelligence
-        logger.debug("All user request patterns: {}", userRequestPatterns);
-        logger.debug("All unique user agents: {}", uniqueUserAgents);
-        logger.debug("Resource access statistics: {}", resourceAccessCounts);
-        
-        // Detailed user behavior analysis
-        for (Map.Entry<String, List<String>> entry : userRequestPatterns.entrySet()) {
-            logger.debug("IP {} accessed resources: {}", entry.getKey(), entry.getValue());
+        // MEMORY LEAK FIX: Clean up collections when they get too large
+        if (allRequestTimestamps.size() > 50000) {
+            // Keep only the most recent 25000 entries
+            synchronized (allRequestTimestamps) {
+                if (allRequestTimestamps.size() > 25000) {
+                    List<String> recentTimestamps = new ArrayList<>(allRequestTimestamps.subList(25000, allRequestTimestamps.size()));
+                    allRequestTimestamps.clear();
+                    allRequestTimestamps.addAll(recentTimestamps);
+                }
+            }
+            logger.info("Cleaned up old request timestamps, remaining: {}", allRequestTimestamps.size());
         }
         
-        // Automated analytics report generation
-        generateDetailedReport();
+        // Clean up user patterns when too large
+        if (userRequestPatterns.size() > 10000) {
+            userRequestPatterns.entrySet().removeIf(entry -> entry.getValue().size() > 100);
+            logger.info("Cleaned up user patterns, remaining: {}", userRequestPatterns.size());
+        }
     }
     
     private void generateDetailedReport() {
-        StringBuilder report = new StringBuilder();
-        report.append("\\n=== DETAILED REQUEST ANALYTICS REPORT ===\\n");
-        report.append("Generated at: ").append(LocalDateTime.now()).append("\\n");
-        report.append("Total IPs tracked: ").append(userRequestPatterns.size()).append("\\n");
-        report.append("Total unique user agents: ").append(uniqueUserAgents.size()).append("\\n");
-        report.append("Total requests: ").append(allRequestTimestamps.size()).append("\\n");
-        
-        report.append("\\n--- IP Access Patterns ---\\n");
-        userRequestPatterns.forEach((ip, resources) -> {
-            report.append("IP: ").append(ip).append(" -> Resources: ").append(resources).append("\\n");
-        });
-        
-        report.append("\\n--- User Agents ---\\n");
-        uniqueUserAgents.forEach(ua -> report.append(ua).append("\\n"));
-        
-        report.append("\\n--- Resource Access Counts ---\\n");
-        resourceAccessCounts.forEach((resource, count) -> {
-            report.append("Resource: ").append(resource).append(" -> Count: ").append(count).append("\\n");
-        });
-        
-        report.append("=== END REPORT ===\\n");
-        
-        // Comprehensive business intelligence reporting
-        logger.info(report.toString());
+        // MEMORY LEAK FIX: Simplified report generation without excessive string building
+        logger.info("=== REQUEST ANALYTICS REPORT ===");
+        logger.info("Generated at: {}", LocalDateTime.now());
+        logger.info("Total IPs tracked: {}", userRequestPatterns.size());
+        logger.info("Total unique user agents: {}", uniqueUserAgents.size());
+        logger.info("Total requests: {}", allRequestTimestamps.size());
+        logger.info("Resource access counts size: {}", resourceAccessCounts.size());
+        logger.info("=== END REPORT ===");
     }
     
     private String lookupLocation(String ip) {

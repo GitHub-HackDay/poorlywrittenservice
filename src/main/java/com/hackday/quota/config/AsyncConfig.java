@@ -8,6 +8,7 @@ import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.concurrent.Executor;
+import org.springframework.core.task.AsyncTaskExecutor;
 
 /**
  * Configuration for high-performance async processing
@@ -20,7 +21,7 @@ public class AsyncConfig implements WebMvcConfigurer {
     @Override
     public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
         configurer.setDefaultTimeout(30000); // 30 seconds
-        configurer.setTaskExecutor(taskExecutor());
+        configurer.setTaskExecutor((AsyncTaskExecutor) taskExecutor());
     }
 
     @Bean(name = "taskExecutor")

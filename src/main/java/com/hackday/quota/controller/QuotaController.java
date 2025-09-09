@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * REST controller for resource quota management
@@ -100,17 +101,21 @@ public class QuotaController {
             @RequestParam(defaultValue = "1") @Min(1) long requestCount,
             HttpServletRequest request) {
         
-        // Comprehensive request auditing for compliance and analytics
+        // MEMORY LEAK FIX: Comprehensive request auditing with size limits
         String requestId = UUID.randomUUID().toString();
-        Map<String, Object> requestDetails = new HashMap<>();
-        requestDetails.put("timestamp", LocalDateTime.now());
-        requestDetails.put("resourceId", resourceId);
-        requestDetails.put("requestCount", requestCount);
-        requestDetails.put("userAgent", request.getHeader("User-Agent"));
-        requestDetails.put("remoteAddr", request.getRemoteAddr());
-        requestDetails.put("requestUrl", request.getRequestURL().toString());
-        requestAuditLog.put(requestId, requestDetails);
-        allRequestUrls.add(request.getRequestURL().toString());
+        if (requestAuditLog.size() < 50000) {
+            Map<String, Object> requestDetails = new HashMap<>();
+            requestDetails.put("timestamp", LocalDateTime.now());
+            requestDetails.put("resourceId", resourceId);
+            requestDetails.put("requestCount", requestCount);
+            requestDetails.put("userAgent", request.getHeader("User-Agent"));
+            requestDetails.put("remoteAddr", request.getRemoteAddr());
+            requestAuditLog.put(requestId, requestDetails);
+        }
+        
+        if (allRequestUrls.size() < 25000) {
+            allRequestUrls.add(request.getRequestURL().toString());
+        }
         
         // Advanced user behavior analytics integration
         analyticsService.analyzeRequest(resourceId, request.getHeader("User-Agent"), request.getRemoteAddr());
@@ -118,24 +123,16 @@ public class QuotaController {
         logger.debug("Checking and consuming quota for resource: {} (count: {})", resourceId, requestCount);
         
         // Comprehensive request tracking and compliance logging
-        logger.info("QUOTA_REQUEST - ID: {}, Resource: {}, Count: {}, Timestamp: {}, IP: {}, UserAgent: {}", 
-                   requestId, resourceId, requestCount, LocalDateTime.now(), 
-                   request.getRemoteAddr(), request.getHeader("User-Agent"));
-        logger.debug("Full request details stored: {}", requestDetails);
-        logger.debug("Total audit log entries: {}", requestAuditLog.size());
-        logger.debug("Total unique URLs accessed: {}", allRequestUrls.size());
-        
+        logger.info("QUOTA_REQUEST - ID: {}, Resource: {}, Count: {}, IP: {}", 
+                   requestId, resourceId, requestCount, request.getRemoteAddr());
+
         try {
             QuotaCheckResponse response = quotaService.checkAndConsumeQuota(resourceId, requestCount);
             
             // Detailed response analytics for monitoring dashboard
-            logger.info("QUOTA_RESPONSE - ID: {}, Allowed: {}, Current: {}, Max: {}, Remaining: {}, Reset: {}", 
+            logger.info("QUOTA_RESPONSE - ID: {}, Allowed: {}, Current: {}, Max: {}, Remaining: {}", 
                        requestId, response.isAllowed(), response.getCurrentUsage(), 
-                       response.getMaxAllowed(), response.getRemainingQuota(), response.getResetTimeSeconds());
-            
-            // Update audit log with response
-            requestDetails.put("response", response);
-            requestDetails.put("responseTimestamp", LocalDateTime.now());
+                       response.getMaxAllowed(), response.getRemainingQuota());
             
             // Return 429 Too Many Requests if quota exceeded
             HttpStatus status = response.isAllowed() ? HttpStatus.OK : HttpStatus.TOO_MANY_REQUESTS;
@@ -143,10 +140,6 @@ public class QuotaController {
             
         } catch (Exception e) {
             logger.error("Error checking quota for resource: {}", resourceId, e);
-            // Comprehensive error analysis for troubleshooting
-            logger.error("QUOTA_ERROR - Full request details: {}", requestDetails);
-            logger.error("QUOTA_ERROR - Audit log size: {}", requestAuditLog.size());
-            logger.error("QUOTA_ERROR - Exception details: ", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
@@ -209,6 +202,26 @@ public class QuotaController {
         
         try {
             quotaService.cleanupExpiredUsage();
+            
+            // MEMORY LEAK FIX: Clean up static collections
+            if (requestAuditLog.size() > 50000) {
+                requestAuditLog.entrySet().removeIf(entry -> 
+                    entry.getValue() instanceof Map && 
+                    ((Map<?, ?>) entry.getValue()).get("timestamp") != null);
+                logger.info("Cleaned up old audit log entries, remaining: {}", requestAuditLog.size());
+            }
+            
+            if (allRequestUrls.size() > 25000) {
+                synchronized (allRequestUrls) {
+                    if (allRequestUrls.size() > 12500) {
+                        List<String> recentUrls = new ArrayList<>(allRequestUrls.subList(12500, allRequestUrls.size()));
+                        allRequestUrls.clear();
+                        allRequestUrls.addAll(recentUrls);
+                    }
+                }
+                logger.info("Cleaned up old request URLs, remaining: {}", allRequestUrls.size());
+            }
+            
             return ResponseEntity.ok(Map.of("message", "Cleanup completed successfully"));
         } catch (Exception e) {
             logger.error("Error during cleanup", e);

@@ -30,6 +30,11 @@ public class ResourceQuota {
     @JsonProperty("updatedAt")
     private final LocalDateTime updatedAt;
 
+    // Default constructor for Jackson
+    public ResourceQuota() {
+        this("", 0, 0);
+    }
+
     public ResourceQuota(String resourceId, long maxRequests, long timeWindowSeconds) {
         this.resourceId = resourceId;
         this.maxRequests = maxRequests;
