@@ -81,7 +81,7 @@ public class ExampleApiController {
         ResourceQuota expensiveQuota = new ResourceQuota("expensive-" + userId, expensiveOpsPerHour, 3600);
         quotaService.createOrUpdateQuota(expensiveQuota);
         
-        return ResponseEntity.ok("Quotas created for user " + userId + 
+        return ResponseEntity.ok("Quotas created for user " + userId.replaceAll("[^a-zA-Z0-9-_]", "") + 
                 ": " + requestsPerHour + " regular requests/hour, " + 
                 expensiveOpsPerHour + " expensive operations/hour");
     }
