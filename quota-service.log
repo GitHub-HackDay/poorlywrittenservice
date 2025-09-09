@@ -209,3 +209,9 @@ Caused by: java.lang.IllegalArgumentException: No cache manager could be auto-co
 2025-09-09 01:25:00.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total unique user agents: 0
 2025-09-09 01:25:00.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total requests: 0
 2025-09-09 01:25:00.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Cache entries: 0
+2025-09-09 01:25:30.585 [scheduling-1] DEBUG c.h.q.service.InMemoryQuotaService - Cleanup cycle completed - no expired trackers found
+2025-09-09 01:25:30.585 [scheduling-1] DEBUG c.h.q.service.InMemoryQuotaService - Current system state - Usage trackers: 0, Quotas: 0
+2025-09-09 01:25:30.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total IPs tracked: 0
+2025-09-09 01:25:30.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total unique user agents: 0
+2025-09-09 01:25:30.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Total requests: 0
+2025-09-09 01:25:30.586 [scheduling-1] INFO  c.h.q.s.RequestAnalyticsService - ANALYTICS_STATS - Cache entries: 0
